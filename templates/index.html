@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cloud Nation | Python Flask App</title><style>
+:root{--navy:#0b1f3a;--blue:#1d63ed;--sky:#0db7ed;--teal:#12b5a6;--orange:#ff8a3d;--yellow:#ffc93c;--purple:#7c4dff;--ink:#1c2740;--muted:#5b6985;--bg:#f3f7ff;--line:#d9e3f7;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+.hero{background:linear-gradient(160deg,#071428 0%,#0b2a5c 55%,#1d63ed 130%);color:#fff;padding:36px 20px 70px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;right:-90px;top:-90px;width:320px;height:320px;border-radius:50%;background:rgba(13,183,237,.2)}
+.hero:after{content:"";position:absolute;left:-80px;bottom:-120px;width:280px;height:280px;border-radius:50%;background:rgba(255,138,61,.16)}
+.wrap{max-width:980px;margin:0 auto;position:relative;z-index:1}
+.brand{font-size:34px;font-weight:900;letter-spacing:3px}.brand span{color:var(--yellow)}
+.tag{font-size:12px;letter-spacing:4px;color:#9fd8ff;font-weight:600;margin-top:4px}
+.kicker{margin-top:34px;color:var(--orange);font-weight:800;letter-spacing:3px;font-size:13px}
+h1{font-size:40px;line-height:1.1;margin:8px 0 10px;font-weight:900}
+.sub{font-size:17px;color:#cfe6ff;max-width:640px}
+.pill{display:inline-block;margin-top:18px;background:rgba(18,181,166,.25);border:1px solid #12b5a6;color:#bff5ee;padding:6px 14px;border-radius:20px;font-weight:700;font-size:14px}
+main{max-width:980px;margin:-40px auto 0;padding:0 16px 30px;position:relative;z-index:2}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:0 6px 18px rgba(11,31,58,.07)}
+.card h2{margin:0 0 8px;font-size:18px;color:var(--navy)}
+.card.b{border-top:5px solid var(--blue)}.card.t{border-top:5px solid var(--teal)}.card.o{border-top:5px solid var(--orange)}.card.p{border-top:5px solid var(--purple)}
+.full{margin-top:16px}
+.live dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px}
+.live dt{color:var(--muted);font-weight:600}.live dd{margin:0;font-family:Consolas,Menlo,monospace;color:#0b3fa8;word-break:break-all}
+ol,ul{padding-left:20px;margin:6px 0}li{margin:4px 0}
+code,pre{font-family:Consolas,Menlo,monospace}
+code{background:#e8f0ff;color:#0b3fa8;padding:1px 6px;border-radius:5px;font-size:.92em}
+pre{background:#0d1b33;color:#e6f1ff;padding:12px 14px;border-radius:10px;overflow:auto;font-size:13px;margin:8px 0}
+pre .c{color:#7fa4d6}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:8px}
+.step{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px}
+.step b{display:inline-block;background:var(--blue);color:#fff;border-radius:50%;width:24px;height:24px;text-align:center;line-height:24px;margin-right:6px}
+.road{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.road span{background:#fff6ea;border:1px solid var(--orange);color:#8a4a12;padding:5px 12px;border-radius:16px;font-weight:700;font-size:13px}
+.road span.done{background:#e8fbf7;border-color:var(--teal);color:#0b6c63}
+.contact{background:linear-gradient(120deg,#0b2a5c,#1d63ed);color:#fff;border-radius:14px;padding:22px;text-align:center;margin-top:16px}
+.contact h2{margin:0 0 6px;color:#fff}.contact b{color:var(--yellow)}.contact p{margin:4px 0;color:#d6e8ff}
+.contact .big{font-size:22px;color:#fff}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:16px}
+table{width:100%;border-collapse:collapse;margin-top:6px}th{background:#0b2a5c;color:#fff;text-align:left;padding:7px 10px}td{padding:7px 10px;border-top:1px solid var(--line)}
+input,button{font:inherit;padding:8px 12px;border-radius:8px;border:1px solid var(--line)}
+button{background:var(--blue);color:#fff;border:none;cursor:pointer;font-weight:700}button.del{background:#ff5c8a;padding:4px 10px}
+@media(max-width:560px){h1{font-size:30px}.brand{font-size:26px}}
+</style></head><body>
+<header class="hero"><div class="wrap"><div class="brand">CLOUD <span>NATION</span></div><div class="tag">LEARN &bull; PRACTISE &bull; GET HIRED</div>
+<div class="kicker">DOCKER CLASS &bull; PRACTICAL PROJECT</div><h1>Python Flask on Docker</h1><div class="sub">A small Python web application running inside a container.</div><div class="pill">&#9989; Your container is running</div></div></header><main><div class="grid">
+<section class="card live b"><h2>&#9889; Live from your container</h2><dl>
+<dt>Container ID</dt><dd>{{ container }}</dd><dt>Python version</dt><dd>{{ python }}</dd><dt>Web server</dt><dd>{{ server }}</dd><dt>Server time</dt><dd>{{ time }}</dd></dl>
+<p style="color:#5b6985;font-size:14px;margin-bottom:0">Refresh the page to see the time change. JSON version: <code>/api/info</code></p></section>
+<section class="card t"><h2>&#128214; What just happened?</h2><ul><li>Docker started from a <b>Python</b> base image.</li><li><code>pip</code> installed <b>Flask</b> from <code>requirements.txt</code>.</li><li>The container ran <code>python app.py</code>.</li><li>Flask answers on port <b>5000</b>.</li></ul></section>
+<section class="card o"><h2>&#128161; Remember</h2><ul><li>Python needs <b>no compilation</b>.</li><li><b>requirements.txt</b> = shopping list of libraries.</li><li><b>RUN</b> = at build time, <b>ENTRYPOINT</b> = at start.</li></ul></section></div>
+<section class="card full p"><h2>&#9000; Commands used in this project</h2><pre><span class="c"># build the image and run the container</span>
+docker build -t python-flask-app .
+docker run -d -p 5000:5000 python-flask-app
+<span class="c"># when something is wrong</span>
+docker logs &lt;container-id&gt;
+docker exec -it &lt;container-id&gt; /bin/bash</pre></section>
+<section class="card full b"><h2>&#128640; Your Docker journey</h2><div class="road"><span class="done">&#10003; Docker basics</span><span class="done">&#10003; Dockerfile</span><span class="done">&#10003; Images &amp; containers</span><span class="">Volumes</span><span class="">Networks</span><span class="">Docker Compose</span><span class="">Docker Swarm</span><span class="">Kubernetes</span><span class="">AWS ECR / ECS</span><span class="">CI/CD with Jenkins</span></div></section><section class="contact"><h2>Learn with Cloud Nation</h2><p>Docker &bull; AWS &bull; Linux &bull; Big Data &mdash; practical classes for freshers and non-IT students</p>
+<p class="big">WhatsApp: <b>+91 78878 01551</b></p><p>Email: <b>cloudnation46@gmail.com</b></p><p>Trainer: <b>Mohammed Mubashir</b></p></section></main><footer>Cloud Nation &copy; 2026 &bull; Created by Mohammed Mubashir &bull; This page is served from inside a Docker container.</footer></body></html>
