@@ -1,58 +1,857 @@
+
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cloud Nation | Python Flask App</title><style>
-:root{--navy:#0b1f3a;--blue:#1d63ed;--sky:#0db7ed;--teal:#12b5a6;--orange:#ff8a3d;--yellow:#ffc93c;--purple:#7c4dff;--ink:#1c2740;--muted:#5b6985;--bg:#f3f7ff;--line:#d9e3f7;--card:#fff}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
-.hero{background:linear-gradient(160deg,#071428 0%,#0b2a5c 55%,#1d63ed 130%);color:#fff;padding:36px 20px 70px;position:relative;overflow:hidden}
-.hero:before{content:"";position:absolute;right:-90px;top:-90px;width:320px;height:320px;border-radius:50%;background:rgba(13,183,237,.2)}
-.hero:after{content:"";position:absolute;left:-80px;bottom:-120px;width:280px;height:280px;border-radius:50%;background:rgba(255,138,61,.16)}
-.wrap{max-width:980px;margin:0 auto;position:relative;z-index:1}
-.brand{font-size:34px;font-weight:900;letter-spacing:3px}.brand span{color:var(--yellow)}
-.tag{font-size:12px;letter-spacing:4px;color:#9fd8ff;font-weight:600;margin-top:4px}
-.kicker{margin-top:34px;color:var(--orange);font-weight:800;letter-spacing:3px;font-size:13px}
-h1{font-size:40px;line-height:1.1;margin:8px 0 10px;font-weight:900}
-.sub{font-size:17px;color:#cfe6ff;max-width:640px}
-.pill{display:inline-block;margin-top:18px;background:rgba(18,181,166,.25);border:1px solid #12b5a6;color:#bff5ee;padding:6px 14px;border-radius:20px;font-weight:700;font-size:14px}
-main{max-width:980px;margin:-40px auto 0;padding:0 16px 30px;position:relative;z-index:2}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:0 6px 18px rgba(11,31,58,.07)}
-.card h2{margin:0 0 8px;font-size:18px;color:var(--navy)}
-.card.b{border-top:5px solid var(--blue)}.card.t{border-top:5px solid var(--teal)}.card.o{border-top:5px solid var(--orange)}.card.p{border-top:5px solid var(--purple)}
-.full{margin-top:16px}
-.live dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px}
-.live dt{color:var(--muted);font-weight:600}.live dd{margin:0;font-family:Consolas,Menlo,monospace;color:#0b3fa8;word-break:break-all}
-ol,ul{padding-left:20px;margin:6px 0}li{margin:4px 0}
-code,pre{font-family:Consolas,Menlo,monospace}
-code{background:#e8f0ff;color:#0b3fa8;padding:1px 6px;border-radius:5px;font-size:.92em}
-pre{background:#0d1b33;color:#e6f1ff;padding:12px 14px;border-radius:10px;overflow:auto;font-size:13px;margin:8px 0}
-pre .c{color:#7fa4d6}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:8px}
-.step{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px}
-.step b{display:inline-block;background:var(--blue);color:#fff;border-radius:50%;width:24px;height:24px;text-align:center;line-height:24px;margin-right:6px}
-.road{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-.road span{background:#fff6ea;border:1px solid var(--orange);color:#8a4a12;padding:5px 12px;border-radius:16px;font-weight:700;font-size:13px}
-.road span.done{background:#e8fbf7;border-color:var(--teal);color:#0b6c63}
-.contact{background:linear-gradient(120deg,#0b2a5c,#1d63ed);color:#fff;border-radius:14px;padding:22px;text-align:center;margin-top:16px}
-.contact h2{margin:0 0 6px;color:#fff}.contact b{color:var(--yellow)}.contact p{margin:4px 0;color:#d6e8ff}
-.contact .big{font-size:22px;color:#fff}
-footer{text-align:center;color:var(--muted);font-size:13px;padding:16px}
-table{width:100%;border-collapse:collapse;margin-top:6px}th{background:#0b2a5c;color:#fff;text-align:left;padding:7px 10px}td{padding:7px 10px;border-top:1px solid var(--line)}
-input,button{font:inherit;padding:8px 12px;border-radius:8px;border:1px solid var(--line)}
-button{background:var(--blue);color:#fff;border:none;cursor:pointer;font-weight:700}button.del{background:#ff5c8a;padding:4px 10px}
-@media(max-width:560px){h1{font-size:30px}.brand{font-size:26px}}
-</style></head><body>
-<header class="hero"><div class="wrap"><div class="brand">CLOUD <span>NATION</span></div><div class="tag">LEARN &bull; PRACTISE &bull; GET HIRED</div>
-<div class="kicker">DOCKER CLASS &bull; PRACTICAL PROJECT</div><h1>Python Flask on Docker</h1><div class="sub">A small Python web application running inside a container.</div><div class="pill">&#9989; Your container is running</div></div></header><main><div class="grid">
-<section class="card live b"><h2>&#9889; Live from your container</h2><dl>
-<dt>Container ID</dt><dd>{{ container }}</dd><dt>Python version</dt><dd>{{ python }}</dd><dt>Web server</dt><dd>{{ server }}</dd><dt>Server time</dt><dd>{{ time }}</dd></dl>
-<p style="color:#5b6985;font-size:14px;margin-bottom:0">Refresh the page to see the time change. JSON version: <code>/api/info</code></p></section>
-<section class="card t"><h2>&#128214; What just happened?</h2><ul><li>Docker started from a <b>Python</b> base image.</li><li><code>pip</code> installed <b>Flask</b> from <code>requirements.txt</code>.</li><li>The container ran <code>python app.py</code>.</li><li>Flask answers on port <b>5000</b>.</li></ul></section>
-<section class="card o"><h2>&#128161; Remember</h2><ul><li>Python needs <b>no compilation</b>.</li><li><b>requirements.txt</b> = shopping list of libraries.</li><li><b>RUN</b> = at build time, <b>ENTRYPOINT</b> = at start.</li></ul></section></div>
-<section class="card full p"><h2>&#9000; Commands used in this project</h2><pre><span class="c"># build the image and run the container</span>
-docker build -t python-flask-app .
-docker run -d -p 5000:5000 python-flask-app
-<span class="c"># when something is wrong</span>
-docker logs &lt;container-id&gt;
-docker exec -it &lt;container-id&gt; /bin/bash</pre></section>
-<section class="card full b"><h2>&#128640; Your Docker journey</h2><div class="road"><span class="done">&#10003; Docker basics</span><span class="done">&#10003; Dockerfile</span><span class="done">&#10003; Images &amp; containers</span><span class="">Volumes</span><span class="">Networks</span><span class="">Docker Compose</span><span class="">Docker Swarm</span><span class="">Kubernetes</span><span class="">AWS ECR / ECS</span><span class="">CI/CD with Jenkins</span></div></section><section class="contact"><h2>Learn with Cloud Nation</h2><p>Docker &bull; AWS &bull; Linux &bull; Big Data &mdash; practical classes for freshers and non-IT students</p>
-<p class="big">WhatsApp: <b>+91 78878 01551</b></p><p>Email: <b>cloudnation46@gmail.com</b></p><p>Trainer: <b>Mohammed Mubashir</b></p></section></main><footer>Cloud Nation &copy; 2026 &bull; Created by Mohammed Mubashir &bull; This page is served from inside a Docker container.</footer></body></html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#176b58">
+    <title>CampusFix | Issue Management</title>
+
+    <style>
+        :root {
+            --green: #176b58;
+            --green-dark: #105242;
+            --green-light: #e8f3ef;
+            --ink: #172b3a;
+            --muted: #70808a;
+            --line: #e1e8e7;
+            --background: #f4f7f6;
+            --white: #ffffff;
+            --amber: #96601a;
+            --red: #a43c3c;
+            --shadow: 0 8px 28px rgba(23, 43, 58, 0.045);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--background);
+            color: var(--ink);
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+        button, input, select, textarea {
+            font: inherit;
+        }
+
+        button, a, input, select, textarea {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .topbar {
+            background: var(--white);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .topbar-inner {
+            max-width: 1240px;
+            margin: auto;
+            padding: 16px 26px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.6px;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            background: var(--green);
+            color: white;
+            border-radius: 10px;
+            font-size: 19px;
+        }
+
+        .brand small {
+            display: block;
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .online {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .online::before {
+            content: "";
+            display: inline-block;
+            height: 7px;
+            width: 7px;
+            border-radius: 50%;
+            background: #2c9876;
+            margin-right: 7px;
+        }
+
+        .container {
+            max-width: 1240px;
+            margin: auto;
+            padding: 30px 26px 45px;
+        }
+
+        .heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .eyebrow {
+            color: var(--green);
+            font-size: 10px;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+
+        h1 {
+            font-size: 31px;
+            letter-spacing: -1.1px;
+            line-height: 1.2;
+            margin: 6px 0;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            margin: 0;
+            font-size: 13px;
+        }
+
+        .heading-note {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .stat {
+            padding: 18px;
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .stat-number {
+            margin-top: 9px;
+            font-size: 30px;
+            line-height: 1.2;
+            font-weight: 750;
+            letter-spacing: -1px;
+        }
+
+        .stat-description {
+            margin-top: 5px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: minmax(0, 1.65fr) minmax(300px, 0.85fr);
+            align-items: start;
+            gap: 18px;
+        }
+
+        .panel {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            min-width: 0;
+        }
+
+        .panel-header {
+            padding: 19px 20px 15px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .panel-header h2 {
+            margin: 0;
+            font-size: 16px;
+            letter-spacing: -0.3px;
+        }
+
+        .panel-header p {
+            margin: 4px 0 0;
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .count {
+            border-radius: 20px;
+            background: var(--green-light);
+            color: var(--green-dark);
+            padding: 5px 9px;
+            font-size: 11px;
+            font-weight: 750;
+            white-space: nowrap;
+        }
+
+        .filters {
+            padding: 13px 20px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            min-width: 0;
+            padding: 10px 11px;
+            border: 1px solid #d8e2e0;
+            border-radius: 7px;
+            background: white;
+            color: var(--ink);
+            outline: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #6da997;
+            box-shadow: 0 0 0 3px rgba(23, 107, 88, 0.08);
+        }
+
+        .filters input {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .filters select {
+            width: auto;
+            min-width: 115px;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 7px;
+            padding: 10px 14px;
+            background: var(--green);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--green-dark);
+        }
+
+        .btn-light {
+            background: var(--green-light);
+            color: var(--green-dark);
+        }
+
+        .btn-light:hover {
+            background: #dcece5;
+        }
+
+        .btn-small {
+            padding: 6px 10px;
+            font-size: 11px;
+        }
+
+        .issue-list {
+            padding: 0 20px;
+        }
+
+        .issue {
+            padding: 18px 0;
+            border-bottom: 1px solid #edf1f0;
+        }
+
+        .issue:last-child {
+            border-bottom: 0;
+        }
+
+        .issue-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .issue h3 {
+            margin: 0 0 6px;
+            font-size: 14px;
+            font-weight: 750;
+        }
+
+        .issue-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px 12px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .description {
+            margin: 10px 0;
+            color: #50616a;
+            font-size: 12px;
+            overflow-wrap: anywhere;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .chip {
+            display: inline-block;
+            border-radius: 5px;
+            padding: 4px 8px;
+            background: #f0f3f3;
+            color: #53636a;
+            font-size: 10px;
+            font-weight: 750;
+        }
+
+        .open {
+            background: #fff3df;
+            color: #8b5a17;
+        }
+
+        .progress {
+            background: #eaf1ff;
+            color: #355ca5;
+        }
+
+        .resolved {
+            background: #e7f5ee;
+            color: #216c4b;
+        }
+
+        .high {
+            background: #fff0ee;
+            color: #a43c3c;
+        }
+
+        .medium {
+            background: #fff5e5;
+            color: #8b5a17;
+        }
+
+        .actions {
+            margin-top: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .actions form {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .actions select {
+            width: auto;
+            padding: 6px 8px;
+            font-size: 11px;
+        }
+
+        .delete-form {
+            margin-left: auto;
+        }
+
+        .delete-btn {
+            padding: 6px 9px;
+            color: var(--red);
+            background: white;
+            border: 1px solid #efd9d6;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .form-body {
+            padding: 20px;
+        }
+
+        .notice {
+            background: #f0f6f3;
+            color: #426456;
+            border: 1px solid #deebe5;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 11px;
+            margin-bottom: 18px;
+        }
+
+        .field {
+            margin-bottom: 14px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .field small {
+            display: block;
+            color: var(--muted);
+            margin-top: 5px;
+            font-size: 10px;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .submit {
+            width: 100%;
+            padding: 12px;
+        }
+
+        .flash {
+            border-radius: 7px;
+            padding: 11px 14px;
+            margin-bottom: 14px;
+            font-size: 12px;
+        }
+
+        .flash.success {
+            background: #e7f5ee;
+            border: 1px solid #cfe8db;
+            color: #216c4b;
+        }
+
+        .flash.error {
+            background: #fff0ee;
+            border: 1px solid #f1d4d1;
+            color: #a43c3c;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 38px 15px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .empty strong {
+            display: block;
+            color: var(--ink);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .api-info {
+            padding: 13px 20px;
+            border-top: 1px solid var(--line);
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .api-info code {
+            padding: 3px 6px;
+            background: var(--green-light);
+            color: var(--green-dark);
+            border-radius: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding-top: 24px;
+            color: #849198;
+            font-size: 11px;
+        }
+
+        @media (max-width: 900px) {
+            .workspace {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 560px) {
+            .topbar-inner {
+                padding: 13px 15px;
+            }
+
+            .online {
+                display: none;
+            }
+
+            .container {
+                padding: 22px 13px 32px;
+            }
+
+            .heading {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+
+            .stats {
+                gap: 9px;
+            }
+
+            .stat {
+                padding: 13px;
+            }
+
+            .stat-number {
+                font-size: 25px;
+            }
+
+            .panel-header {
+                padding: 15px;
+            }
+
+            .filters {
+                padding: 12px 15px;
+            }
+
+            .issue-list {
+                padding: 0 15px;
+            }
+
+            .form-body {
+                padding: 15px;
+            }
+
+            .two-columns {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .actions form {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="topbar-inner">
+        <a href="{{ url_for('index') }}" class="brand">
+            <span class="brand-icon">C</span>
+            <span>
+                CampusFix
+                <small>Campus operations</small>
+            </span>
+        </a>
+
+        <div class="online">Issue desk online</div>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="heading">
+        <div>
+            <div class="eyebrow">Facilities & student services</div>
+            <h1>Issue management</h1>
+            <p class="subtitle">
+                A central place to report campus problems and track their resolution.
+            </p>
+        </div>
+        <div class="heading-note">Campus helpdesk dashboard</div>
+    </section>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <section class="stats">
+        <article class="stat">
+            <div class="stat-label">Total reports</div>
+            <div class="stat-number">{{ totals.all }}</div>
+            <div class="stat-description">All submitted issues</div>
+        </article>
+
+        <article class="stat">
+            <div class="stat-label">Open issues</div>
+            <div class="stat-number">{{ totals.open }}</div>
+            <div class="stat-description">Waiting for action</div>
+        </article>
+
+        <article class="stat">
+            <div class="stat-label">In progress</div>
+            <div class="stat-number">{{ totals.progress }}</div>
+            <div class="stat-description">Currently being handled</div>
+        </article>
+
+        <article class="stat">
+            <div class="stat-label">Resolved</div>
+            <div class="stat-number">{{ totals.resolved }}</div>
+            <div class="stat-description">Completed reports</div>
+        </article>
+    </section>
+
+    <div class="workspace">
+
+        <section class="panel">
+            <div class="panel-header">
+                <div>
+                    <h2>Campus issue register</h2>
+                    <p>Review reports and manage their current status.</p>
+                </div>
+                <span class="count">{{ issues|length }} shown</span>
+            </div>
+
+            <form class="filters" method="GET" action="{{ url_for('index') }}">
+                <input
+                    type="search"
+                    name="q"
+                    value="{{ search }}"
+                    placeholder="Search reports..."
+                    aria-label="Search reports"
+                >
+
+                <select name="status" aria-label="Filter by status">
+                    <option value="All">All statuses</option>
+                    {% for s in statuses %}
+                        <option value="{{ s }}"
+                            {% if status_filter == s %}selected{% endif %}>
+                            {{ s }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <select name="category" aria-label="Filter by category">
+                    <option value="All">All categories</option>
+                    {% for c in categories %}
+                        <option value="{{ c }}"
+                            {% if category_filter == c %}selected{% endif %}>
+                            {{ c }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <button class="btn btn-small" type="submit">Apply</button>
+
+                {% if search or status_filter != 'All' or category_filter != 'All' %}
+                    <a class="btn btn-light btn-small"
+                       href="{{ url_for('index') }}">Clear</a>
+                {% endif %}
+            </form>
+
+            <div class="issue-list">
+                {% for issue in issues %}
+                    <article class="issue">
+
+                        <div class="issue-top">
+                            <div>
+                                <h3>
+                                    #CF-{{ "%04d"|format(issue.id) }}
+                                    &nbsp; {{ issue.title }}
+                                </h3>
+
+                                <div class="issue-meta">
+                                    <span>{{ issue.location }}</span>
+                                    <span>By {{ issue.reporter }}</span>
+                                    <span>{{ issue.created_at }}</span>
+                                </div>
+                            </div>
+
+                            <span class="chip
+                                {% if issue.status == 'Open' %}open
+                                {% elif issue.status == 'In Progress' %}progress
+                                {% else %}resolved{% endif %}">
+                                {{ issue.status }}
+                            </span>
+                        </div>
+
+                        <p class="description">{{ issue.description }}</p>
+
+                        <div class="chips">
+                            <span class="chip">{{ issue.category }}</span>
+                            <span class="chip
+                                {% if issue.priority == 'High' %}high
+                                {% elif issue.priority == 'Medium' %}medium
+                                {% endif %}">
+                                {{ issue.priority }} priority
+                            </span>
+                        </div>
+
+                        <div class="actions">
+                            <form method="POST"
+                                  action="{{ url_for('update_status', issue_id=issue.id) }}">
+
+                                <label for="status-{{ issue.id }}"
+                                       style="font-size:11px;color:#70808a">
+                                    Status
+                                </label>
+
+                                <select id="status-{{ issue.id }}" name="status">
+                                    {% for s in statuses %}
+                                        <option value="{{ s }}"
+                                            {% if issue.status == s %}selected{% endif %}>
+                                            {{ s }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+
+                                <button class="btn btn-small" type="submit">
+                                    Save
+                                </button>
+                            </form>
+
+                            <form class="delete-form"
+                                  method="POST"
+                                  action="{{ url_for('delete_issue', issue_id=issue.id) }}"
+                                  onsubmit="return confirm('Delete this report permanently?');">
+
+                                <button class="delete-btn" type="submit">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </article>
+
+                {% else %}
+                    <div class="empty">
+                        <strong>No matching reports</strong>
+                        Try changing the filters or submit a new issue.
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="api-info">
+                API: <code>GET /api/issues</code>
+                &nbsp;·&nbsp;
+                Health: <code>GET /health</code>
+            </div>
+        </section>
+
+        <aside class="panel">
+            <div class="panel-header">
+                <div>
+                    <h2>Submit a report</h2>
+                    <p>Describe the problem clearly.</p>
+                </div>
+            </div>
+
+            <form class="form-body" method="POST" action="{{ url_for('create_issue') }}">
+
+                <div class="notice">
+                    Reports are saved in the application database.
+                    New reports begin with <strong>Open</strong> status.
+                </div>
+
+                <div class="field">
+                    <label for="title">Issue title *</label>
+                    <input id="title" name="title" maxlength="100"
+                           required placeholder="e.g. Computer not starting">
+                </div>
+
+                <div class="two-columns">
+                    <div class="field">
+                        <label for="category">Category *</label>
+                        <select id="category" name="category" required>
+                            {% for c in categories %}
+                                <option value="{{ c }}">{{ c }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="priority">Priority *</label>
+                        <select id="priority" name="priority" required>
+                            <option value="Low">Low</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="location">Campus location *</label>
+                    <input id="location" name="location" maxlength="120"
+                           required placeholder="Building, floor or room">
+                </div>
+
+                <div class="field">
+                    <label for="reporter">Your name *</label>
+                    <input id="reporter" name="reporter" maxlength="80"
+                           required placeholder="Enter your name">
+                </div>
+
+                <div class="field">
+                    <label for="description">Description *</label>
+                    <textarea id="description" name="description"
+                              maxlength="1000" required
+                              placeholder="Explain what happened..."></textarea>
+                    <small>Maximum 1,000 characters.</small>
+                </div>
+
+                <button class="btn submit" type="submit">
+                    Submit report &rarr;
+                </button>
+            </form>
+        </aside>
+
+    </div>
+
+    <footer>
+        CampusFix · Campus Issue Management System · Flask + SQLite
+    </footer>
+
+</main>
+
+</body>
+</html>
